@@ -1,0 +1,3 @@
+%{
+  "jason": {:hex, :jason, "1.0.1", "ef108e64c6e086364b9f15b0073cf794061670af8f331d545d7308c0ba2e67f9", [:mix], [{:decimal, "~> 1.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm"},
+}
