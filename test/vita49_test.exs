@@ -38,4 +38,20 @@ defmodule Vita49Test do
       end
     end)
   end
+
+  test "it can parse multiple slices correctly" do
+    inputs = [
+      "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.12",
+      "3 tx=1 txant=ANT2 RF_frequency=3.12",
+      "af|slice 4 tx=0 txant=ANT1 RF_frequency=7.25"
+    ]
+
+    results = Enum.map(inputs, &Vita49.parse_slice(&1))
+
+    assert results == [
+             [%{"tx" => "1", "txant" => "ANT2", "RF_frequency" => "3.12"}],
+             [],
+             [%{"tx" => "0", "txant" => "ANT1", "RF_frequency" => "7.25"}]
+           ]
+  end
 end
