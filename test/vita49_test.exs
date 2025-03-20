@@ -7,7 +7,7 @@ defmodule Vita49Test do
       "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.12"
       |> Vita49.parse_slice()
 
-    expected = [%{:RF_frequency => "3.12", :tx => "1", :txant => "ANT2"}]
+    expected = [%{"RF_frequency" => "3.12", "tx" => "1", "txant" => "ANT2"}]
 
     assert res == expected
   end
@@ -31,7 +31,7 @@ defmodule Vita49Test do
     |> Enum.each(fn slice ->
       case slice do
         [result] ->
-          assert result[:tx] == "1"
+          assert result["tx"] == "1"
 
         no_match ->
           assert no_match == []

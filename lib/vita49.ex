@@ -1,32 +1,26 @@
 defmodule Vita49 do
-  @moduledoc """
-  Documentation for Vita49.
-  """
-
   def parse_slice(str) do
-    case str =~ "|slice" do
-      true ->
-        check_and_build_slice_map(str)
-
-      false ->
-        []
+    if valid_slice?(str) do
+      check_and_build_slice_map(str)
+    else
+      []
     end
   end
 
+  defp valid_slice?(str) do
+    String.starts_with?(str, ["af|slice ", "slice "])
+  end
+
   defp check_and_build_slice_map(str) do
-    result =
-      String.split(str, " ")
-      |> Enum.filter(&(&1 =~ "="))
-      |> Enum.map(fn kv ->
-        kvs = String.split(kv, "=")
+    str
+    |> String.split()
+    |> Enum.filter(&String.contains?(&1, "="))
+    |> Enum.map(fn kv ->
+      [key, value] = String.split(kv, "=", parts: 2)
 
-        k = :"#{Enum.at(kvs, 0)}"
-        v = Enum.at(kvs, 1)
-
-        {k, v}
-      end)
-      |> Enum.into(%{})
-
-    [result]
+      {key, value}
+    end)
+    |> Enum.into(%{})
+    |> List.wrap()
   end
 end
